@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Nancy.Security;
-
-namespace Auth0.Nancy.SelfHost
+﻿namespace Nancy.Auth0
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using Security;
+
     public static class SecurityExtensions
     {
         public static Auth0User ToUserModel(this IUserIdentity identity)
@@ -23,8 +22,8 @@ namespace Auth0.Nancy.SelfHost
         {
             var item = claims.ToList().SingleOrDefault(x => x.Contains(lookingfor));
 
-            return String.IsNullOrEmpty(item)
-                ? String.Empty
+            return string.IsNullOrEmpty(item)
+                ? string.Empty
                 : item.Split(':')[1];
         }
     }

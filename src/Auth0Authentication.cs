@@ -1,13 +1,13 @@
-using System.Collections.Generic;
-using System.Linq;
-using Nancy;
-using Nancy.Bootstrapper;
-using Nancy.Responses;
-using Nancy.Security;
-using Nancy.Session;
-
-namespace Auth0.Nancy.SelfHost
+namespace Nancy.Auth0
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using Nancy;
+    using Bootstrapper;
+    using Responses;
+    using Security;
+    using Session;
+
     public class Auth0Authentication
     {
         private static AuthenticationConfig _config;

@@ -1,8 +1,8 @@
-using System.Collections.Generic;
-using Nancy.Security;
-
-namespace Auth0.Nancy.SelfHost
+namespace Nancy.Auth0
 {
+    using System.Collections.Generic;
+    using Security;
+
     public class Auth0User : IUserIdentity
     {
         private IEnumerable<string> _claims;

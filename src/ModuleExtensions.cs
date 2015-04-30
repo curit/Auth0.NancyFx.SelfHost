@@ -1,62 +1,64 @@
-﻿using System.Configuration;
-using Nancy;
-using Nancy.Security;
+﻿//namespace Nancy.Auth0
+//{
+//    using System.Configuration;
+//    using Nancy;
+//    using Security;
 
-namespace Auth0.Nancy.SelfHost
-{
-    public static class ModuleExtensions
-    {
-        private static readonly Auth0.Client Auth0Client = new Auth0.Client(
-            ConfigurationManager.AppSettings["auth0:ClientId"],
-            ConfigurationManager.AppSettings["auth0:ClientSecret"],
-            ConfigurationManager.AppSettings["auth0:Domain"]);
+//    using global::Auth0;
 
-        public static void RequiresAuthentication(this NancyModule module)
-        {
-            module.Before.AddItemToEndOfPipeline(Auth0Authentication.AuthenticateSession);
-        }
+//    public static class ModuleExtensions
+//    {
+//        private static readonly Client Auth0Client = new global::Auth0.Client(
+//            ConfigurationManager.AppSettings["auth0:ClientId"],
+//            ConfigurationManager.AppSettings["auth0:ClientSecret"],
+//            ConfigurationManager.AppSettings["auth0:Domain"]);
 
-        public static IResponseFormatter AuthenticateThisSession(this NancyModule module)
-        {
-            var code = (string) module.Request.Query["code"];
+//        public static void RequiresAuthentication(this NancyModule module)
+//        {
+//            module.Before.AddItemToEndOfPipeline(Auth0Authentication.AuthenticateSession);
+//        }
 
-            var token = Auth0Client.ExchangeAuthorizationCodePerAccessToken(code,
-                ConfigurationManager.AppSettings["auth0:CallbackUrl"]);
+//        public static IResponseFormatter AuthenticateThisSession(this NancyModule module)
+//        {
+//            var code = (string) module.Request.Query["code"];
 
-            var userInfo = Auth0Client.GetUserInfo(token);
+//            var token = Auth0Client.ExchangeAuthorizationCodePerAccessToken(code,
+//                ConfigurationManager.AppSettings["auth0:CallbackUrl"]);
 
-            var user = new Auth0User
-            {
-                AccessToken = token.AccessToken,
-                UserToken = token.IdToken,
-                UserId = userInfo.UserId,
-                Name = userInfo.Name,
-                Nickname = userInfo.Nickname,
-                GravatarUrl = userInfo.Picture,
-                Email = userInfo.Email
-            };
+//            var userInfo = Auth0Client.GetUserInfo(token);
 
-            Auth0Authentication.CreateAuthenticationSessionFor(user, module.Context.Request.Session);
+//            var user = new Auth0User
+//            {
+//                AccessToken = token.AccessToken,
+//                UserToken = token.IdToken,
+//                UserId = userInfo.UserId,
+//                Name = userInfo.Name,
+//                Nickname = userInfo.Nickname,
+//                GravatarUrl = userInfo.Picture,
+//                Email = userInfo.Email
+//            };
 
-            return module.Response;
-        }
+//            Auth0Authentication.CreateAuthenticationSessionFor(user, module.Context.Request.Session);
 
-        public static IResponseFormatter RemoveAuthenticationFromThisSession(this NancyModule module)
-        {
-            var userInstance = module.Context.CurrentUser.ToUserModel();
-            Auth0Authentication.RemoveAuthenticationFor(userInstance, module.Session);
+//            return module.Response;
+//        }
 
-            return module.Response;
-        }
+//        public static IResponseFormatter RemoveAuthenticationFromThisSession(this NancyModule module)
+//        {
+//            var userInstance = module.Context.CurrentUser.ToUserModel();
+//            Auth0Authentication.RemoveAuthenticationFor(userInstance, module.Session);
 
-        public static bool SessionIsAuthenticated(this NancyModule module)
-        {
-            return module.Context.CurrentUser.IsAuthenticated();
-        }
+//            return module.Response;
+//        }
 
-        public static Response ThenRedirectTo(this IResponseFormatter response, string viewName)
-        {
-            return response.AsRedirect(viewName);
-        }
-    }
-}
+//        public static bool SessionIsAuthenticated(this NancyModule module)
+//        {
+//            return module.Context.CurrentUser.IsAuthenticated();
+//        }
+
+//        public static Response ThenRedirectTo(this IResponseFormatter response, string viewName)
+//        {
+//            return response.AsRedirect(viewName);
+//        }
+//    }
+//}

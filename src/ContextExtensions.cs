@@ -1,8 +1,8 @@
-﻿using System;
-using Nancy;
-
-namespace Auth0.Nancy.SelfHost
+﻿namespace Nancy.Auth0
 {
+    using System;
+    using Nancy;
+
     public static class ContextExtensions
     {
         public static bool ContainsCookie(this NancyContext context, string cookieName)
